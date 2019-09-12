@@ -13,6 +13,7 @@ void imprimirEncabezado_1();
 void imprimirEncabezado_2();
 void imprimirMovimientos();
 void imprimirResumen();
+void imprimirEspacios(int);
 
 #endif /* HERRAMIENTAS_H */
 
