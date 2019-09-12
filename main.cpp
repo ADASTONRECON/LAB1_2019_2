@@ -10,9 +10,9 @@
 using namespace std;
 
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv){
 
-    int i, numcaracteres, codigo;
+    int i, numcaracteres, codigo, dia, mes ,anio;
     float tipocambio_dolar, tipocambio_euro, saldo;
     float monto;
     double totaldeposito, totalretiro;
@@ -31,21 +31,24 @@ int main(int argc, char** argv) {
 
     while (1) {
         while (1) {
-
+            cin.clear();
             numcaracteres = 0;
 
             //LECTURA E IMPRESIÓN DEL NOMBRE, CODIGO, MONEDA Y SALDO INICIAL DEL USUARIO
             imprimirEncabezado_1();
             while (1) {
                 car = cin.get();
+                if(cin.eof())
+                    return 0;
                 if (car == ' ') {
                     primeraletra = true;
+                    cout.put(' ');
+                    numcaracteres++;
                     car2 = cin.peek();
                     if (car2 == ' ') {
                         break;
                     }
-                }
-                if (primeraletra) {
+                } else if (primeraletra) {
                     //car = car2;                    
                     primeraletra = false;                               
                     cout << car;
@@ -82,25 +85,34 @@ int main(int argc, char** argv) {
 
             //LECTURA E IMPRESION DE LOS MOVIMIENTOS HECHOS POR EL USUARIO
             imprimirEncabezado_2();
+            cin >> ws;
             while (1) {
                 //LECTURA E IMPRESION DE LA FECHA
-                for (i = 0; i < 11; i++) {
-                    car = cin.get();
-                    cout.put(car);
-                }
+                if(!(cin >> dia >> car >> mes >> car >> anio))
+                    break;
+
+                cout << right <<setw(2) << setfill('0') <<  dia << '/' << setw(2) << mes << '/' << anio << left << setfill(' ');
+
 
                 cantdeposito = 0;
                 cantretiro = 0;
                 totaldeposito = 0.0;
                 totalretiro = 0.0;
+
                 //LECTURA DE LOS DEPOSITOS Y RETIROS POR DIA
                 while (1) {
+                    car2 = car;
                     cin >> ws >> car;
-                    if ((car != 'D') || (car != 'R')) {
+                    /*if ((car != 'D') || (car != 'R')) {
+                        cin.unget();
+                        car = car2;
+                    }*/
+                    if ((car == 'S') || (car == '$') || (car == '&')) {
                         cin.unget();
                         car = car2;
                     }
                     cin >> ws >> car2 >> monto;
+
                     switch (car2) {
                         case 'S':
                         {
@@ -137,34 +149,24 @@ int main(int argc, char** argv) {
                         cantdeposito++;
                         totaldeposito += monto;
                         saldo += monto;
-                        car2 = car;
                     }
                     if (car == 'R') {
                         cantretiro++;
                         totalretiro += monto;
                         saldo -= monto;
-                        car2 = car;
                     }
 
                     if (cin.get() == '\n') {
-                        cout << right << setw(5) << tipomoneda << "  " << setw (10) <<totalretiro;
-                        cout << right << setw(15) << tipomoneda << "  " << setw (10) << totaldeposito;
-                        cout << right << setw(15) << tipomoneda << "  " << setw (10) << saldo << endl ;                        
+                        cout << right << setw(10) << tipomoneda << " " << setw (9) <<totalretiro;
+                        cout << right << setw(13) << tipomoneda << " " << setw (9) << totaldeposito;
+                        cout << right << setw(15) << tipomoneda << " " << setw (9) << saldo << endl ;
+                        cin >> ws;
                         break;
                     } else {
                         cin.unget();
                     }
                 }
-                if (cin.get() == '\n') {
-                    break;
-                } else {
-                    cin.unget();
-                }
             }
-        }
-        cin.get();
-        if(cin.eof()){
-            break;
         }
     }
     return 0;
