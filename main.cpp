@@ -43,7 +43,6 @@ int main(int argc, char** argv){
                 if (car == ' ') {
                     primeraletra = true;
                     cout.put(' ');
-                    numcaracteres++;
                     car2 = cin.peek();
                     if (car2 == ' ') {
                         break;
@@ -52,34 +51,33 @@ int main(int argc, char** argv){
                     //car = car2;                    
                     primeraletra = false;                               
                     cout << car;
-                    
                 } else {
                     car = car - 'A' + 'a';
                     cout << car;
                 }    
                 numcaracteres++;
             }
+            imprimirEspacios(numcaracteres);
             cin >> codigo >> ws >> tipomoneda >> saldo;
-            cout << "    " << setw(21) << codigo;
-            cout << setw(19);
+            cout << "    " << setw(18) << codigo << left;
             switch (tipomoneda) {
                 case '$':
                 {
-                    cout << "Dólar";
+                    cout<< setw(20) << "Dólar";
                     break;
                 }
                 case 'S':
                 {
-                    cout << "Soles";
+                    cout<< setw(20) << "Soles";
                     break;
                 }
                 case '&':
                 {
-                    cout << "Euros";
+                    cout<< setw(20) << "Euros";
                     break;
                 }
             }
-            cout << "  " << tipomoneda << "  " << saldo << endl;
+            cout << tipomoneda << "  " << saldo << endl;
 
 
 
@@ -92,7 +90,6 @@ int main(int argc, char** argv){
                     break;
 
                 cout << right <<setw(2) << setfill('0') <<  dia << '/' << setw(2) << mes << '/' << anio << left << setfill(' ');
-
 
                 cantdeposito = 0;
                 cantretiro = 0;
@@ -156,15 +153,18 @@ int main(int argc, char** argv){
                         saldo -= monto;
                     }
 
-                    if (cin.get() == '\n') {
+
+                    //CAMBIO DE LINEA EN LINUX ES \r Y PARA WINDOWS \n
+                    if (cin.get() == '\r') {
                         cout << right << setw(10) << tipomoneda << " " << setw (9) <<totalretiro;
                         cout << right << setw(13) << tipomoneda << " " << setw (9) << totaldeposito;
-                        cout << right << setw(15) << tipomoneda << " " << setw (9) << saldo << endl ;
+                        cout << right << setw(15) << tipomoneda << " " << setw (9) << saldo << endl;
+
                         cin >> ws;
                         break;
                     } else {
                         cin.unget();
-                    }
+                    } 
                 }
             }
         }
